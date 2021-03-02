@@ -5,9 +5,10 @@ import numpy as np
 data = pd.read_csv('~/Documents/Workspace/Projects/data_analysis_machine_learning/examples/athlete_events.csv')
 print(data.head())
 
-# histogram = data.hist(column='Weight', bins = 100)
-# plt.show()
+male = data.loc[data['Sex'] == 'M']
 
-array = np.array([6, 5, 1, 7, 9, 4])
-plt.hist(array, bins = 10)
+heightMale = male['Height']
+weightMale = male['Weight']
+
+plt.scatter(heightMale, weightMale)
 plt.show()
