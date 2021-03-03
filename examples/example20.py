@@ -1,11 +1,24 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import ExtraTreesClassifier
 
-data = pd.read_csv('~/Documents/Workspace/Projects/data_analysis_machine_learning/examples/wine_dataset.csv')
-print(data.head())
+archive = pd.read_csv('~/Documents/Workspace/Projects/data_analysis_machine_learning/examples/wine_dataset.csv')
 
-data['style'] = data['style'].replace('red', 0)
-data['style'] = data['style'].replace('white', 0)
-print(data.head())
+print(archive.head())
 
-target = data['style']
-build = data.drop('style', axis = 1)
+archive['style'] = archive['style'].replace('red', 0)
+archive['style'] = archive['style'].replace('white', 0)
+
+x = archive['style']
+y = archive.drop('style', axis = 1)
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
+
+x_train = x_train.values.reshape(-1, 1)
+y_train = y_train.values.reshape(-1, 1)
+
+model = ExtraTreesClassifier(n_estimators=100)
+model.fit(x_train, y_train)
+
+result = model.score(x_train, y_train)
+print("Accuracy: ", result)
